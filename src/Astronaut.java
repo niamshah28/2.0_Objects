@@ -14,7 +14,8 @@ public class Astronaut {
     public int dy;                    //the speed of the hero in the y direction
     public int width;
     public int height;
-    public boolean isAlive;            //a boolean to denote if the hero is alive or dead.
+    public boolean isAlive;           //a boolean to denote if the hero is alive or dead.
+    Image astroPic;
 
 
     // METHOD DEFINITION SECTION
@@ -28,8 +29,8 @@ public class Astronaut {
     public Astronaut(int pXpos, int pYpos) {
         xpos = pXpos;
         ypos = pYpos;
-        dx =1;
-        dy =0;
+        dx =18;
+        dy =18;
         width = 60;
         height = 60;
         isAlive = true;
@@ -41,6 +42,18 @@ public class Astronaut {
         if(xpos >= 1000-width){
             dx = -dx;
         }
+
+        if(ypos > height){
+            dy = -dy;
+        }
+
+        if(ypos <=0){
+            dy=-dy;
+        }
+        if (xpos <=0){
+            dx = -dx;
+        }
+
 
         xpos = xpos + dx;
         ypos = ypos + dy;
