@@ -39,11 +39,14 @@ public class BasicGameApp implements Runnable {
    
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
+    public Image GabroidPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Astronaut astro;
     private Astronaut astro2;
+    private Gabroid gabby1;
+    private Giddy giddy1;
 
    // Main method definition
    // This is the code that runs first and automatically
@@ -69,7 +72,7 @@ public class BasicGameApp implements Runnable {
       int randy = (int)(Math.random() * 10) + 1;
 
       // range 1-999
-      randx = (int)(Math.random() * 999) + 1;
+      randx = (int)(Math.random() * 99) + 1;
       //0.34-0.999999
       //0.1111-998.82
         //1.111 - 999.87
@@ -78,13 +81,18 @@ public class BasicGameApp implements Runnable {
 
         //todo: make variable randy that generated a random number between 1-699
 
-
+        astro = new Astronaut(WIDTH/2,HEIGHT/2);
+        astro2 = new Astronaut(randx,randy);
+        gabby1 = new Gabroid(100, 200);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
-		astro = new Astronaut(WIDTH/2,HEIGHT/2);
-        astro2 = new Astronaut(randx,randy);
-        astro2.astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+        GabroidPic = Toolkit.getDefaultToolkit().getImage("Gabroid.png");
+        astro2.astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the
+
+
+
+
 
 
 
@@ -115,6 +123,7 @@ public class BasicGameApp implements Runnable {
       //calls the move( ) code in the objects
 		astro.move();
         astro2.move();
+        gabby1.move();
 
 	}
 	
@@ -167,7 +176,9 @@ public class BasicGameApp implements Runnable {
       //draw the image of the astronaut
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
         g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+        g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos,gabby1.width, gabby1.height, null);
 
+        //end drawing
         g.dispose();
 
 		bufferStrategy.show();
