@@ -85,7 +85,7 @@ public class BasicGameApp implements Runnable {
         astro = new Astronaut(WIDTH/2,HEIGHT/2);
         astro2 = new Astronaut(randx,randy);
         gabby1 = new Gabroid(100, 200);
-        giddy1 = new Giddy(100, 200);
+        giddy1 = new Giddy(200, 200);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
@@ -127,8 +127,21 @@ public class BasicGameApp implements Runnable {
 		astro.move();
         astro2.move();
         gabby1.move();
+        giddy1.move();
+        crashing();
 
 	}
+
+    public void crashing(){
+        // check to see if my astros crash into each other
+        if(astro.hitbox.intersects(astro2.hitbox)){
+            System.out.println("SPLAT!!!");
+            astro.dx = -astro.dx;
+            astro2.dx = -astro2.dx;
+            astro.dy = -astro.dy;
+            astro2.dy = -astro2.dy;
+        }
+    }
 	
    //Pauses or sleeps the computer for the amount specified in milliseconds
    public void pause(int time ){
@@ -180,6 +193,10 @@ public class BasicGameApp implements Runnable {
 		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
         g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
         g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos,gabby1.width, gabby1.height, null);
+        g.drawImage(GiddyPic, giddy1.xpos, giddy1.ypos,giddy1.width, giddy1.height, null);
+        g.drawRect(astro.hitbox.x, astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
+        g.drawRect(astro2.hitbox.x, astro2.hitbox.y, astro2.hitbox.width, astro2.hitbox.height);
+
 
         //end drawing
         g.dispose();
