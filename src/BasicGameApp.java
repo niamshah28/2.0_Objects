@@ -40,6 +40,7 @@ public class BasicGameApp implements Runnable {
 	public BufferStrategy bufferStrategy;
 	public Image astroPic;
     public Image GabroidPic;
+    public Image GiddyPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
@@ -84,10 +85,12 @@ public class BasicGameApp implements Runnable {
         astro = new Astronaut(WIDTH/2,HEIGHT/2);
         astro2 = new Astronaut(randx,randy);
         gabby1 = new Gabroid(100, 200);
+        giddy1 = new Giddy(100, 200);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
         GabroidPic = Toolkit.getDefaultToolkit().getImage("Gabroid.png");
+        GiddyPic = Toolkit.getDefaultToolkit().getImage("Giddy.png");
         astro2.astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the
 
 
