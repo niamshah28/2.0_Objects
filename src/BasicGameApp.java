@@ -41,7 +41,7 @@ public class BasicGameApp implements Runnable {
 	public Image RyryPic;
     public Image GabroidPic;
     public Image GiddyPic;
-
+    public Image backgrounPic;
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
 	private Ryry Ryry1;
@@ -84,14 +84,16 @@ public class BasicGameApp implements Runnable {
 
         Ryry1 = new Ryry(WIDTH/2,HEIGHT/2);
         Ryry2 = new Ryry(randx,randy);
-        gabby1 = new Gabroid(100, 200);
-        giddy1 = new Giddy(200, 200);
+        gabby1 = new Gabroid(100, 100);
+        gabby1.dx = -gabby1.dx;
+        giddy1 = new Giddy(100, 100);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
 		RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the picture
         GabroidPic = Toolkit.getDefaultToolkit().getImage("Gabroid.png");
         GiddyPic = Toolkit.getDefaultToolkit().getImage("Giddy.png");
         Ryry2.RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the
+        backgrounPic = Toolkit.getDefaultToolkit().getImage("Sachin.png");
 
 
 
@@ -135,14 +137,28 @@ public class BasicGameApp implements Runnable {
     public void crashing(){
         // check to see if my astros crash into each other
         if(Ryry1.hitbox.intersects(Ryry2.hitbox)){
-            System.out.println("SPLAT!!!");
+            System.out.println("Ryan got cooked!!!");
             Ryry1.dx = -Ryry1.dx;
             Ryry2.dx = -Ryry2.dx;
             Ryry1.dy = -Ryry1.dy;
             Ryry2.dy = -Ryry2.dy;
+            Ryry2.isAlive = false;
         }
-        if (Ryry1.hitbox.intersects(Ryry2.hitbox)){
-            System.out.println();
+
+        if (gabby1.hitbox.intersects(giddy1.hitbox) && gabby1.isCrashing == false){
+            System.out.println("Gabe got rammed!!!");
+            gabby1.height+=50;
+            //gabby1.dx = -gabby1.dx;
+            //gabby1.dy = -gabby1.dy;
+            //giddy1.dx = -giddy1.dx;
+            //giddy1.dy = -giddy1.dy;
+            gabby1.isCrashing = true;
+
+        }
+
+        if(!gabby1.hitbox.intersects(giddy1.hitbox)){
+            System.out.println("Gabe is safe...for now;)");
+            gabby1.isCrashing = false;
         }
     }
 	
@@ -191,10 +207,13 @@ public class BasicGameApp implements Runnable {
 	private void render() {
 		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
 		g.clearRect(0, 0, WIDTH, HEIGHT);
-
+        g.drawImage(backgrounPic, 0, 0,WIDTH, HEIGHT, null);
       //draw the image of the astronaut
 		g.drawImage(RyryPic, Ryry1.xpos, Ryry1.ypos, Ryry1.width, Ryry1.height, null);
-        g.drawImage(RyryPic, Ryry2.xpos, Ryry2.ypos, Ryry2.width, Ryry2.height, null);
+
+        if(Ryry2.isAlive == true) {
+            g.drawImage(RyryPic, Ryry2.xpos, Ryry2.ypos, Ryry2.width, Ryry2.height, null);
+        }
         g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos,gabby1.width, gabby1.height, null);
         g.drawImage(GiddyPic, giddy1.xpos, giddy1.ypos,giddy1.width, giddy1.height, null);
         g.drawRect(Ryry1.hitbox.x, Ryry1.hitbox.y, Ryry1.hitbox.width, Ryry1.hitbox.height);
