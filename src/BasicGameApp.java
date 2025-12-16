@@ -38,14 +38,14 @@ public class BasicGameApp implements Runnable {
    public JPanel panel;
    
 	public BufferStrategy bufferStrategy;
-	public Image astroPic;
+	public Image RyryPic;
     public Image GabroidPic;
     public Image GiddyPic;
 
    //Declare the objects used in the program
    //These are things that are made up of more than one variable type
-	private Astronaut astro;
-    private Astronaut astro2;
+	private Ryry Ryry1;
+    private Ryry Ryry2;
     private Gabroid gabby1;
     private Giddy giddy1;
 
@@ -82,16 +82,16 @@ public class BasicGameApp implements Runnable {
 
         //todo: make variable randy that generated a random number between 1-699
 
-        astro = new Astronaut(WIDTH/2,HEIGHT/2);
-        astro2 = new Astronaut(randx,randy);
+        Ryry1 = new Ryry(WIDTH/2,HEIGHT/2);
+        Ryry2 = new Ryry(randx,randy);
         gabby1 = new Gabroid(100, 200);
         giddy1 = new Giddy(200, 200);
       //variable and objects
       //create (construct) the objects needed for the game and load up 
-		astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the picture
+		RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the picture
         GabroidPic = Toolkit.getDefaultToolkit().getImage("Gabroid.png");
         GiddyPic = Toolkit.getDefaultToolkit().getImage("Giddy.png");
-        astro2.astroPic = Toolkit.getDefaultToolkit().getImage("astronaut.png"); //load the
+        Ryry2.RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the
 
 
 
@@ -124,8 +124,8 @@ public class BasicGameApp implements Runnable {
 	public void moveThings()
 	{
       //calls the move( ) code in the objects
-		astro.move();
-        astro2.move();
+		Ryry1.move();
+        Ryry2.move();
         gabby1.move();
         giddy1.move();
         crashing();
@@ -134,12 +134,15 @@ public class BasicGameApp implements Runnable {
 
     public void crashing(){
         // check to see if my astros crash into each other
-        if(astro.hitbox.intersects(astro2.hitbox)){
+        if(Ryry1.hitbox.intersects(Ryry2.hitbox)){
             System.out.println("SPLAT!!!");
-            astro.dx = -astro.dx;
-            astro2.dx = -astro2.dx;
-            astro.dy = -astro.dy;
-            astro2.dy = -astro2.dy;
+            Ryry1.dx = -Ryry1.dx;
+            Ryry2.dx = -Ryry2.dx;
+            Ryry1.dy = -Ryry1.dy;
+            Ryry2.dy = -Ryry2.dy;
+        }
+        if (Ryry1.hitbox.intersects(Ryry2.hitbox)){
+            System.out.println();
         }
     }
 	
@@ -190,12 +193,12 @@ public class BasicGameApp implements Runnable {
 		g.clearRect(0, 0, WIDTH, HEIGHT);
 
       //draw the image of the astronaut
-		g.drawImage(astroPic, astro.xpos, astro.ypos, astro.width, astro.height, null);
-        g.drawImage(astroPic, astro2.xpos, astro2.ypos, astro2.width, astro2.height, null);
+		g.drawImage(RyryPic, Ryry1.xpos, Ryry1.ypos, Ryry1.width, Ryry1.height, null);
+        g.drawImage(RyryPic, Ryry2.xpos, Ryry2.ypos, Ryry2.width, Ryry2.height, null);
         g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos,gabby1.width, gabby1.height, null);
         g.drawImage(GiddyPic, giddy1.xpos, giddy1.ypos,giddy1.width, giddy1.height, null);
-        g.drawRect(astro.hitbox.x, astro.hitbox.y, astro.hitbox.width, astro.hitbox.height);
-        g.drawRect(astro2.hitbox.x, astro2.hitbox.y, astro2.hitbox.width, astro2.hitbox.height);
+        g.drawRect(Ryry1.hitbox.x, Ryry1.hitbox.y, Ryry1.hitbox.width, Ryry1.hitbox.height);
+        g.drawRect(Ryry2.hitbox.x, Ryry2.hitbox.y, Ryry2.hitbox.width, Ryry2.hitbox.height);
 
 
         //end drawing
