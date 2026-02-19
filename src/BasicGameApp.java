@@ -13,6 +13,8 @@
 
 //Graphics Libraries
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable {
+public class BasicGameApp implements Runnable, KeyListener{
 
    //Variable Definition Section
    //Declare the variables used in the program 
@@ -137,7 +139,7 @@ public class BasicGameApp implements Runnable {
     public void crashing(){
         // check to see if my astros crash into each other
         if(Ryry1.hitbox.intersects(Ryry2.hitbox)){
-            System.out.println("Ryan got cooked!!!");
+            //System.out.println("Ryan got cooked!!!");
             Ryry1.dx = -Ryry1.dx;
             Ryry2.dx = -Ryry2.dx;
             Ryry1.dy = -Ryry1.dy;
@@ -146,7 +148,7 @@ public class BasicGameApp implements Runnable {
         }
 
         if (gabby1.hitbox.intersects(giddy1.hitbox) && gabby1.isCrashing == false){
-            System.out.println("Gabe got rammed!!!");
+            //System.out.println("Gabe got rammed!!!");
             gabby1.height+=50;
             //gabby1.dx = -gabby1.dx;
             //gabby1.dy = -gabby1.dy;
@@ -157,7 +159,7 @@ public class BasicGameApp implements Runnable {
         }
 
         if(!gabby1.hitbox.intersects(giddy1.hitbox)){
-            System.out.println("Gabe is safe...for now;)");
+            //System.out.println("Gabe is safe...for now;)");
             gabby1.isCrashing = false;
         }
     }
@@ -182,7 +184,10 @@ public class BasicGameApp implements Runnable {
    
       // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
       // and trap input events (Mouse and Keyboard events)
-      canvas = new Canvas();  
+      canvas = new Canvas();
+
+      //Step 2 set up new canvas
+       canvas.addKeyListener(this);
       canvas.setBounds(0, 0, WIDTH, HEIGHT);
       canvas.setIgnoreRepaint(true);
    
@@ -224,5 +229,43 @@ public class BasicGameApp implements Runnable {
         g.dispose();
 
 		bufferStrategy.show();
+
+        //step 3: add key listener methods
 	}
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println("Key typed" + e.getKeyCode());
+        //up arrow 38
+        if(e.getKeyCode() == 38){
+            System.out.println("pressed 'up' arrow");
+        //    Ryry1.ypos = Ryry1.ypos - 20;
+            Ryry1.dy = -Math.abs(Ryry1.dy);
+        }
+        if(e.getKeyCode() == 39){
+            System.out.println("pressed 'right' arrow");
+            //    Ryry1.ypos = Ryry1.ypos - 20;
+            Ryry1.dx = Math.abs(Ryry1.dx);
+        }
+        if(e.getKeyCode() == 37){
+            System.out.println("pressed 'left' arrow");
+            //    Ryry1.ypos = Ryry1.ypos - 20;
+            Ryry1.dx = -Math.abs(Ryry1.dx);
+        }
+        if(e.getKeyCode() == 40){
+            System.out.println("pressed 'down' arrow");
+            //    Ryry1.ypos = Ryry1.ypos - 20;
+            Ryry1.dy = Math.abs(Ryry1.dy);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
 }
