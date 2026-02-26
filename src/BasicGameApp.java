@@ -15,6 +15,8 @@
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -24,121 +26,144 @@ import javax.swing.JPanel;
 //*******************************************************************************
 // Class Definition Section
 
-public class BasicGameApp implements Runnable, KeyListener{
+public class BasicGameApp implements Runnable, KeyListener, MouseListener {
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
-   //Variable Definition Section
-   //Declare the variables used in the program 
-   //You can set their initial values too
-   
-   //Sets the width and height of the program window
-	final int WIDTH = 1000;
-	final int HEIGHT = 700;
+    }
 
-   //Declare the variables needed for the graphics
-	public JFrame frame;
-	public Canvas canvas;
-   public JPanel panel;
-   
-	public BufferStrategy bufferStrategy;
-	public Image RyryPic;
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e.getPoint());
+        giddy1.xpos = e.getX();
+        giddy1.ypos = e.getY();
+        if(e.getClickCount() == 2){
+            giddy1.height = giddy1.height * 2;
+            giddy1.width = giddy1.width * 2;
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("entered!!!!");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+//Variable Definition Section
+    //Declare the variables used in the program
+    //You can set their initial values too
+
+    //Sets the width and height of the program window
+    final int WIDTH = 1000;
+    final int HEIGHT = 700;
+
+    //Declare the variables needed for the graphics
+    public JFrame frame;
+    public Canvas canvas;
+    public JPanel panel;
+
+    public BufferStrategy bufferStrategy;
+    public Image RyryPic;
     public Image GabroidPic;
     public Image GiddyPic;
     public Image backgrounPic;
-   //Declare the objects used in the program
-   //These are things that are made up of more than one variable type
-	private Ryry Ryry1;
+    //Declare the objects used in the program
+    //These are things that are made up of more than one variable type
+    private Ryry Ryry1;
     private Ryry Ryry2;
     private Gabroid gabby1;
     private Giddy giddy1;
 
-   // Main method definition
-   // This is the code that runs first and automatically
-	public static void main(String[] args) {
-		BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
-		new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method  
-	}
+    // Main method definition
+    // This is the code that runs first and automatically
+    public static void main(String[] args) {
+        BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
+        new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method
+    }
 
 
-   // Constructor Method
-   // This has the same name as the class
-   // This section is the setup portion of the program
-   // Initialize your variables and construct your program objects here.
-	public BasicGameApp() {
-      
-      setUpGraphics();
+    // Constructor Method
+    // This has the same name as the class
+    // This section is the setup portion of the program
+    // Initialize your variables and construct your program objects here.
+    public BasicGameApp() {
+
+        setUpGraphics();
 
 
-      // random structure
+        // random structure
         //(int)(Math.random() * range) + start
         //This range is 1-10
-      int randx = (int)(Math.random() * 10) + 1;
-      int randy = (int)(Math.random() * 10) + 1;
+        int randx = (int) (Math.random() * 10) + 1;
+        int randy = (int) (Math.random() * 10) + 1;
 
-      // range 1-999
-      randx = (int)(Math.random() * 99) + 1;
-      //0.34-0.999999
-      //0.1111-998.82
+        // range 1-999
+        randx = (int) (Math.random() * 99) + 1;
+        //0.34-0.999999
+        //0.1111-998.82
         //1.111 - 999.87
         //1-999
-        randy = (int)(Math.random() * 699) + 1;
+        randy = (int) (Math.random() * 699) + 1;
 
         //todo: make variable randy that generated a random number between 1-699
 
-        Ryry1 = new Ryry(WIDTH/2,HEIGHT/2);
-        Ryry2 = new Ryry(randx,randy);
+        Ryry1 = new Ryry(WIDTH / 2, HEIGHT / 2);
+        Ryry2 = new Ryry(randx, randy);
         gabby1 = new Gabroid(100, 100);
         gabby1.dx = -gabby1.dx;
         giddy1 = new Giddy(100, 100);
-      //variable and objects
-      //create (construct) the objects needed for the game and load up 
-		RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the picture
+        //variable and objects
+        //create (construct) the objects needed for the game and load up
+        RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the picture
         GabroidPic = Toolkit.getDefaultToolkit().getImage("Gabroid.png");
         GiddyPic = Toolkit.getDefaultToolkit().getImage("Giddy.png");
         Ryry2.RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the
         backgrounPic = Toolkit.getDefaultToolkit().getImage("Sachin.png");
 
 
+    }// BasicGameApp()
 
 
-
-
-
-	}// BasicGameApp()
-
-   
 //*******************************************************************************
 //User Method Section
 //
 // put your code to do things here.
 
-   // main thread
-   // this is the code that plays the game after you set things up
-	public void run() {
+    // main thread
+    // this is the code that plays the game after you set things up
+    public void run() {
 
-      //for the moment we will loop things forever.
-		while (true) {
+        //for the moment we will loop things forever.
+        while (true) {
 
-         moveThings();  //move all the game objects
-         render();  // paint the graphics
-         pause(20); // sleep for 10 ms
-		}
-	}
+            moveThings();  //move all the game objects
+            render();  // paint the graphics
+            pause(20); // sleep for 10 ms
+        }
+    }
 
 
-	public void moveThings()
-	{
-      //calls the move( ) code in the objects
-		Ryry1.move();
+    public void moveThings() {
+        //calls the move( ) code in the objects
+        Ryry1.move();
         Ryry2.move();
         gabby1.move();
         giddy1.move();
         crashing();
 
-	}
+    }
 
-    public void crashing(){
+    public void crashing() {
         // check to see if my astros crash into each other
-        if(Ryry1.hitbox.intersects(Ryry2.hitbox)){
+        if (Ryry1.hitbox.intersects(Ryry2.hitbox)) {
             //System.out.println("Ryan got cooked!!!");
             Ryry1.dx = -Ryry1.dx;
             Ryry2.dx = -Ryry2.dx;
@@ -147,9 +172,9 @@ public class BasicGameApp implements Runnable, KeyListener{
             Ryry2.isAlive = false;
         }
 
-        if (gabby1.hitbox.intersects(giddy1.hitbox) && gabby1.isCrashing == false){
+        if (gabby1.hitbox.intersects(giddy1.hitbox) && gabby1.isCrashing == false) {
             //System.out.println("Gabe got rammed!!!");
-            gabby1.height+=50;
+            gabby1.height += 50;
             //gabby1.dx = -gabby1.dx;
             //gabby1.dy = -gabby1.dy;
             //giddy1.dx = -giddy1.dx;
@@ -158,69 +183,70 @@ public class BasicGameApp implements Runnable, KeyListener{
 
         }
 
-        if(!gabby1.hitbox.intersects(giddy1.hitbox)){
+        if (!gabby1.hitbox.intersects(giddy1.hitbox)) {
             //System.out.println("Gabe is safe...for now;)");
             gabby1.isCrashing = false;
         }
     }
-	
-   //Pauses or sleeps the computer for the amount specified in milliseconds
-   public void pause(int time ){
-   		//sleep
-			try {
-				Thread.sleep(time);
-			} catch (InterruptedException e) {
 
-			}
-   }
+    //Pauses or sleeps the computer for the amount specified in milliseconds
+    public void pause(int time) {
+        //sleep
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
 
-   //Graphics setup method
-   private void setUpGraphics() {
-      frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-   
-      panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
-      panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
-      panel.setLayout(null);   //set the layout
-   
-      // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
-      // and trap input events (Mouse and Keyboard events)
-      canvas = new Canvas();
+        }
+    }
 
-      //Step 2 set up new canvas
-       canvas.addKeyListener(this);
-      canvas.setBounds(0, 0, WIDTH, HEIGHT);
-      canvas.setIgnoreRepaint(true);
-   
-      panel.add(canvas);  // adds the canvas to the panel.
-   
-      // frame operations
-      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
-      frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-      frame.setResizable(false);   //makes it so the frame cannot be resized
-      frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-      
-      // sets up things so the screen displays images nicely.
-      canvas.createBufferStrategy(2);
-      bufferStrategy = canvas.getBufferStrategy();
-      canvas.requestFocus();
-      System.out.println("DONE graphic setup");
-   
-   }
+    //Graphics setup method
+    private void setUpGraphics() {
+        frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
+
+        panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
+        panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
+        panel.setLayout(null);   //set the layout
+
+        // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
+        // and trap input events (Mouse and Keyboard events)
+        canvas = new Canvas();
+
+        //Step 2 set up new canvas
+        canvas.addKeyListener(this);
+        canvas.addMouseListener(this);
+        canvas.setBounds(0, 0, WIDTH, HEIGHT);
+        canvas.setIgnoreRepaint(true);
+
+        panel.add(canvas);  // adds the canvas to the panel.
+
+        // frame operations
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
+        frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
+        frame.setResizable(false);   //makes it so the frame cannot be resized
+        frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
+
+        // sets up things so the screen displays images nicely.
+        canvas.createBufferStrategy(2);
+        bufferStrategy = canvas.getBufferStrategy();
+        canvas.requestFocus();
+        System.out.println("DONE graphic setup");
+
+    }
 
 
-	//paints things on the screen using bufferStrategy
-	private void render() {
-		Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
-		g.clearRect(0, 0, WIDTH, HEIGHT);
-        g.drawImage(backgrounPic, 0, 0,WIDTH, HEIGHT, null);
-      //draw the image of the astronaut
-		g.drawImage(RyryPic, Ryry1.xpos, Ryry1.ypos, Ryry1.width, Ryry1.height, null);
+    //paints things on the screen using bufferStrategy
+    private void render() {
+        Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
+        g.clearRect(0, 0, WIDTH, HEIGHT);
+        g.drawImage(backgrounPic, 0, 0, WIDTH, HEIGHT, null);
+        //draw the image of the astronaut
+        g.drawImage(RyryPic, Ryry1.xpos, Ryry1.ypos, Ryry1.width, Ryry1.height, null);
 
-        if(Ryry2.isAlive == true) {
+        if (Ryry2.isAlive == true) {
             g.drawImage(RyryPic, Ryry2.xpos, Ryry2.ypos, Ryry2.width, Ryry2.height, null);
         }
-        g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos,gabby1.width, gabby1.height, null);
-        g.drawImage(GiddyPic, giddy1.xpos, giddy1.ypos,giddy1.width, giddy1.height, null);
+        g.drawImage(GabroidPic, gabby1.xpos, gabby1.ypos, gabby1.width, gabby1.height, null);
+        g.drawImage(GiddyPic, giddy1.xpos, giddy1.ypos, giddy1.width, giddy1.height, null);
         g.drawRect(Ryry1.hitbox.x, Ryry1.hitbox.y, Ryry1.hitbox.width, Ryry1.hitbox.height);
         g.drawRect(Ryry2.hitbox.x, Ryry2.hitbox.y, Ryry2.hitbox.width, Ryry2.hitbox.height);
 
@@ -228,10 +254,10 @@ public class BasicGameApp implements Runnable, KeyListener{
         //end drawing
         g.dispose();
 
-		bufferStrategy.show();
+        bufferStrategy.show();
 
         //step 3: add key listener methods
-	}
+    }
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -242,30 +268,43 @@ public class BasicGameApp implements Runnable, KeyListener{
     public void keyPressed(KeyEvent e) {
         System.out.println("Key typed" + e.getKeyCode());
         //up arrow 38
-        if(e.getKeyCode() == 38){
+        if (e.getKeyCode() == 38) {
             System.out.println("pressed 'up' arrow");
-        //    Ryry1.ypos = Ryry1.ypos - 20;
+            //    Ryry1.ypos = Ryry1.ypos - 20;
             Ryry1.dy = -Math.abs(Ryry1.dy);
+            Ryry1.dy = -5;
         }
-        if(e.getKeyCode() == 39){
+        if (e.getKeyCode() == 39) {
             System.out.println("pressed 'right' arrow");
             //    Ryry1.ypos = Ryry1.ypos - 20;
             Ryry1.dx = Math.abs(Ryry1.dx);
         }
-        if(e.getKeyCode() == 37){
+        if (e.getKeyCode() == 37) {
             System.out.println("pressed 'left' arrow");
             //    Ryry1.ypos = Ryry1.ypos - 20;
             Ryry1.dx = -Math.abs(Ryry1.dx);
         }
-        if(e.getKeyCode() == 40){
+        if (e.getKeyCode() == 40) {
             System.out.println("pressed 'down' arrow");
             //    Ryry1.ypos = Ryry1.ypos - 20;
             Ryry1.dy = Math.abs(Ryry1.dy);
+            Ryry1.dy = 5;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        //UP ARROW 38
+        if (e.getKeyCode() == 38) {
+            System.out.println("not pressed up arrow");
+            //  Ryry1.ypos = Ryry1.ypos -20;
+            Ryry1.dy = 0;
+        }
+        if (e.getKeyCode() == 40) {
+            System.out.println("not pressed down arrow");
+            //  Ryry1.ypos = Ryry1.ypos -20;
+            Ryry1.dy = 0;
+        }
 
     }
 }
