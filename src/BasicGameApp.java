@@ -81,6 +81,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     private Ryry Ryry2;
     private Gabroid gabby1;
     private Giddy giddy1;
+    public Ryry[] roids;
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -120,6 +121,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         gabby1 = new Gabroid(100, 100);
         gabby1.dx = -gabby1.dx;
         giddy1 = new Giddy(100, 100);
+
+        roids = new Ryry[5];
+        for (int g = 0; g<roids.length; g++) {
+            roids[g] = new Ryry((int)(Math.random()*1000), (int)(Math.random()*700));
+        }
         //variable and objects
         //create (construct) the objects needed for the game and load up
         RyryPic = Toolkit.getDefaultToolkit().getImage("Ryry.png"); //load the picture
@@ -250,7 +256,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         g.drawRect(Ryry1.hitbox.x, Ryry1.hitbox.y, Ryry1.hitbox.width, Ryry1.hitbox.height);
         g.drawRect(Ryry2.hitbox.x, Ryry2.hitbox.y, Ryry2.hitbox.width, Ryry2.hitbox.height);
 
-
+        for (int z=0; z<roids.length; z++){
+            g.drawImage(RyryPic, roids[z].xpos, roids[z].ypos, roids[z].width, roids[z].height, null);
+        }
         //end drawing
         g.dispose();
 
